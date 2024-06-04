@@ -29,6 +29,9 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
 				// 		"--swiper-pagination-color": "#fff",
 				// 	} as React.CSSProperties
 				// }
+				style={{
+					height: "600px",
+				}}
 				spaceBetween={10}
 				navigation={true}
 				autoplay={{ delay: 2500 }}
@@ -42,7 +45,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
 							height={800}
 							src={`/products/${image}`}
 							alt={title}
-							className='rounded-lg object-fill'
+							className='rounded-lg object-contain'
 						/>
 					</SwiperSlide>
 				))}
@@ -62,7 +65,7 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
 							height={150}
 							src={`/products/${image}`}
 							alt={title}
-							className='rounded-lg object-fill'
+							className='rounded-md object-fill'
 						/>
 					</SwiperSlide>
 				))}
