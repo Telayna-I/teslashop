@@ -1,4 +1,5 @@
 export interface SeedProduct {
+	id: string;
 	description: string;
 	images: string[];
 	inStock: number;
@@ -7,7 +8,7 @@ export interface SeedProduct {
 	slug: string;
 	tags: string[];
 	title: string;
-	type: Type;
+	// type: Type;
 	gender: Category;
 }
 
