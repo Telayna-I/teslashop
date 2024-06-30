@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { getPaginatedProductsWithImages } from "@/actions";
 import { Pagination, ProductGrid, Title } from "@/components";
 import { redirect } from "next/navigation";
@@ -21,7 +23,7 @@ export default async function Home({ searchParams }: Props) {
 		<main className=''>
 			<Title title='Tienda' subtitle='Todos los productos' className=' mb-2' />
 			<ProductGrid products={products} />
-			<Pagination totalPages={totalPages} currentPage={currentPage} />
+			<Pagination totalPages={totalPages} />
 		</main>
 	);
 }
