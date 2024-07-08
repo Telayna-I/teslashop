@@ -1,4 +1,4 @@
-export interface SeedProduct {
+export interface Product {
 	id: string;
 	description: string;
 	images: string[];
@@ -10,6 +10,16 @@ export interface SeedProduct {
 	title: string;
 	// type: Type;
 	gender: Category;
+}
+
+export interface CartProduct {
+	id: string;
+	slug: string;
+	title: string;
+	price: number;
+	quantity: number;
+	size: Size;
+	image: string;
 }
 
 export type Category = "men" | "women" | "kid" | "unisex";
