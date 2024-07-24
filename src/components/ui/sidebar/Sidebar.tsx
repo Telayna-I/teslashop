@@ -15,10 +15,16 @@ import {
 
 import { useUIStore } from "@/store";
 import clsx from "clsx";
+import { logout } from "@/actions";
+import { useSession } from "next-auth/react";
 
 export const Sidebar = () => {
 	const isSideMenuOpen = useUIStore((state) => state.isSideMenuOpen);
 	const closeMenu = useUIStore((state) => state.closeSideMenu);
+
+	const { data: session } = useSession();
+
+	const isAuthenticated = !!session?.user;
 
 	return (
 		<div>
@@ -58,54 +64,67 @@ export const Sidebar = () => {
 						className='w-full bg-gray-50 rounded pl-10 py-1 pr-10 border-b-2 text-sm border-gray-200 focus:outline-none focus:border-blue-500'
 					/>
 				</div>
+				{isAuthenticated && (
+					<>
+						<Link
+							href={"/profile"}
+							onClick={() => closeMenu()}
+							className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
+							<IoPersonOutline size={22} />
+							<span className='ml-3'>Perfil</span>
+						</Link>
 
-				<Link
-					href={"/"}
-					className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
-					<IoPersonOutline size={22} />
-					<span className='ml-3'>Perfil</span>
-				</Link>
+						<Link
+							href={"/"}
+							className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
+							<IoTicketOutline size={22} />
+							<span className='ml-3'>Ordenes</span>
+						</Link>
+					</>
+				)}
 
-				<Link
-					href={"/"}
-					className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
-					<IoTicketOutline size={22} />
-					<span className='ml-3'>Ordenes</span>
-				</Link>
+				{isAuthenticated && (
+					<button
+						onClick={() => logout()}
+						className='flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
+						<IoLogOutOutline size={22} />
+						<span className='ml-3'>Salir</span>
+					</button>
+				)}
 
-				<Link
-					href={"/"}
-					className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
-					<IoLogInOutline size={22} />
-					<span className='ml-3'>Ingresar</span>
-				</Link>
+				{!isAuthenticated && (
+					<Link
+						href={"/auth/login"}
+						onClick={() => closeMenu()}
+						className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
+						<IoLogInOutline size={22} />
+						<span className='ml-3'>Ingresar</span>
+					</Link>
+				)}
 
-				<Link
-					href={"/"}
-					className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
-					<IoLogOutOutline size={22} />
-					<span className='ml-3'>Salir</span>
-				</Link>
-
-				<div className='w-full h-px  bg-gray-200 my-10' />
-				<Link
-					href={"/"}
-					className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
-					<IoShirtOutline size={22} />
-					<span className='ml-3'>Productos</span>
-				</Link>
-				<Link
-					href={"/"}
-					className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
-					<IoTicketOutline size={22} />
-					<span className='ml-3'>Ordenes</span>
-				</Link>
-				<Link
-					href={"/"}
-					className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
-					<IoPeopleOutline size={22} />
-					<span className='ml-3'>Usuarios</span>
-				</Link>
+				{session?.user.role === "admin" && (
+					<>
+						<div className='w-full h-px  bg-gray-200 my-10' />
+						<Link
+							href={"/"}
+							className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
+							<IoShirtOutline size={22} />
+							<span className='ml-3'>Productos</span>
+						</Link>
+						<Link
+							href={"/"}
+							className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
+							<IoTicketOutline size={22} />
+							<span className='ml-3'>Ordenes</span>
+						</Link>
+						<Link
+							href={"/"}
+							className='flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all '>
+							<IoPeopleOutline size={22} />
+							<span className='ml-3'>Usuarios</span>
+						</Link>
+					</>
+				)}
 			</nav>
 		</div>
 	);

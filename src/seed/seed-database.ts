@@ -1,15 +1,17 @@
-import { url } from "inspector";
 import prisma from "../lib/prisma";
 import { initialData } from "./seed";
 
 async function main() {
 	await Promise.all([
+		prisma.user.deleteMany(),
 		prisma.productImage.deleteMany(),
 		prisma.product.deleteMany(),
 		prisma.category.deleteMany(),
 	]);
 
-	const { categories, products } = initialData;
+	const { categories, products, users } = initialData;
+
+	await prisma.user.createMany({ data: users });
 
 	const categoriesData = categories.map((name) => ({
 		name,
