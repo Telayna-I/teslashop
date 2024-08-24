@@ -5,18 +5,19 @@ import { persist } from "zustand/middleware";
 interface State {
 	cart: CartProduct[];
 
-	getTotalItems: () => number;
-
 	removeProduct: (product: CartProduct) => void;
 
 	addProductToCart: (product: CartProduct) => void;
 
 	updateProductQuantity: (product: CartProduct, quantity: number) => void;
 
+	clearCart: () => void;
+
 	getSummaryInformation: () => {
 		subTotal: number;
 		tax: number;
 		total: number;
+		itemsInCart: number;
 	};
 }
 
@@ -25,13 +26,10 @@ export const useCartStore = create<State>()(
 		(set, get) => ({
 			cart: [],
 
-			getTotalItems: () => {
-				const { cart } = get();
-				return cart.reduce((total, item) => total + item.quantity, 0);
-			},
-
 			getSummaryInformation: () => {
 				const { cart } = get();
+
+				const itemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
 
 				const subTotal = cart.reduce(
 					(subTotal, item) => subTotal + item.quantity * item.price,
@@ -46,6 +44,7 @@ export const useCartStore = create<State>()(
 					subTotal,
 					tax,
 					total,
+					itemsInCart,
 				};
 			},
 
@@ -96,6 +95,9 @@ export const useCartStore = create<State>()(
 				);
 
 				set({ cart: updatedCart });
+			},
+			clearCart: () => {
+				set({ cart: [] });
 			},
 		}),
 		{ name: "shopping-cart" }

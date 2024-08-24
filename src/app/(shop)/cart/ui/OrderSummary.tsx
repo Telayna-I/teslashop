@@ -6,7 +6,7 @@ import { currencyFormater } from "../../../../utils/currencyFormat";
 
 export const OrderSummary = () => {
 	const { subTotal, tax, total } = useCartStore((state) => state.getSummaryInformation());
-	const items = useCartStore((state) => state.getTotalItems());
+	const items = useCartStore((state) => state.getSummaryInformation());
 	const [loaded, setLoaded] = useState(false);
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ export const OrderSummary = () => {
 			<h2 className='text-2xl mb-2'>Resumen de orden</h2>
 			<div className='grid grid-cols-2'>
 				<span>No. Productos</span>
-				<span className='text-right'>{items} articulos</span>
+				<span className='text-right'>{items.itemsInCart} articulos</span>
 
 				<span>Subtotal</span>
 				<span className='text-right'>{currencyFormater(subTotal)}</span>

@@ -56,6 +56,7 @@ model Product {
   category     Category       @relation(fields: [categoryId], references: [id])
   categoryId   String
   ProductImage ProductImage[]
+  orderItem    OrderItem[]
 
   @@index([gender])
 }
@@ -76,12 +77,17 @@ model User {
   role        Role         @default(user)
   image       String?
   UserAddress UserAddress?
+
+  //Relaciones
+
+  Order Order[]
 }
 
 model Country {
-  id          String        @id
-  name        String
-  UserAddress UserAddress[]
+  id           String         @id
+  name         String
+  UserAddress  UserAddress[]
+  OrderAddress OrderAddress[]
 }
 
 model UserAddress {
@@ -101,4 +107,55 @@ model UserAddress {
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
+}
+
+model Order {
+  id           String    @id @default(uuid())
+  subTotal     Float
+  tax          Float
+  total        Float
+  itemsInOrder Int
+  isPaid       Boolean   @default(false)
+  paidAt       DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  user         User          @relation(fields: [userId], references: [id])
+  userId       String
+  orderItem    OrderItem[]
+  orderAddress OrderAddress?
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int
+  price    Float
+  size     Size
+
+  //Relaciones
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model OrderAddress {
+  id         String  @id @default(uuid())
+  firstName  String
+  lastName   String
+  address    String
+  address2   String?
+  postalCode String
+  city       String
+  phone      String
+
+  //Relaciones
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String  @unique
 }
