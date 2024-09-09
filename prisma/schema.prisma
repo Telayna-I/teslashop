@@ -126,6 +126,8 @@ model Order {
   userId       String
   orderItem    OrderItem[]
   orderAddress OrderAddress?
+
+  transactionId String?
 }
 
 model OrderItem {

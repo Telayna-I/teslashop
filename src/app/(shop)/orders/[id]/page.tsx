@@ -1,14 +1,8 @@
 import { getOrderById } from "@/actions";
-import { QuantitySelector, Title } from "@/components";
-
-import { initialData } from "@/seed/seed";
+import { OrderStatus, PayPalButton, Title } from "@/components";
 import { currencyFormater } from "@/utils";
-import clsx from "clsx";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { IoCartOutline } from "react-icons/io5";
-
-const productsInCart = [initialData.products[0], initialData.products[1], initialData.products[2]];
 
 interface Props {
 	params: {
@@ -35,24 +29,8 @@ export default async function OrdersByIdPage({ params }: Props) {
 				<div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
 					{/* Carrito */}
 					<div className='flex flex-col mt-5'>
-						<div
-							className={clsx(
-								"flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
-								{
-									"bg-red-500": !order!.isPaid,
-									"bg-green-700": order!.isPaid,
-								}
-							)}>
-							<IoCartOutline size={30} />
-
-							{order!.isPaid ? (
-								<span className='mx-2'>Orden pagada.</span>
-							) : (
-								<span className='mx-2'>Pendiente de pago.</span>
-							)}
-						</div>
-
 						{/* Items */}
+						<OrderStatus isPaid={order!.isPaid} />
 						{order!.orderItem.map((item) => (
 							<div key={item.product.slug + "-" + item.size} className='flex mb-5'>
 								<Image
@@ -112,21 +90,11 @@ export default async function OrdersByIdPage({ params }: Props) {
 						</div>
 
 						<div className='mt-5 mb-2 w-full'>
-							<div
-								className={clsx(
-									"flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
-									{
-										"bg-red-500": !order!.isPaid,
-										"bg-green-700": order!.isPaid,
-									}
-								)}>
-								<IoCartOutline size={30} />
-								{order!.isPaid ? (
-									<span className='mx-2'>Orden pagada.</span>
-								) : (
-									<span className='mx-2'>Pendiente de pago.</span>
-								)}
-							</div>
+							{order?.isPaid ? (
+								<OrderStatus isPaid={order!.isPaid} />
+							) : (
+								<PayPalButton amount={order!.total} orderId={order!.id} />
+							)}
 						</div>
 					</div>
 				</div>
