@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 export const getOrdersByUser = async () => {
 	const session = await auth();
 
-	if (!session!.user) {
+	if (!session?.user) {
 		console.log("debe estare autenticado");
 		return {
 			ok: false,
