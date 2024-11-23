@@ -11,7 +11,6 @@ import { IoInformationOutline } from "react-icons/io5";
 
 export const LoginForm = () => {
 	const [state, dispatch] = useFormState(authenticate, undefined);
-	const [password, setPassword] = useState("123456");
 
 	console.log({ state: state });
 
@@ -20,10 +19,6 @@ export const LoginForm = () => {
 			window.location.replace("/");
 		}
 	}, [state]);
-
-	useEffect(() => {
-		setPassword("123456"); // Asignar valor predeterminado
-	}, []);
 
 	return (
 		<form action={dispatch} className='flex flex-col'>
@@ -40,8 +35,7 @@ export const LoginForm = () => {
 				className='px-5 py-2 border bg-gray-200 rounded mb-5'
 				name='password'
 				type='password'
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
+				defaultValue='123456'
 			/>
 			<div className='flex h-8 items-end space-x-1' aria-live='polite' aria-atomic='true'>
 				{state === "CredentialsSignin" && (
