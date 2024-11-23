@@ -7,7 +7,7 @@ export default function LoginPage() {
 			<h1 className={`${titleFont.className} text-4xl mb-5`}>Ingresar</h1>
 
 			<p className='bg-gradient-to-r from-violet-600 to-indigo-600 font-bold text-white p-2 mb-5'>
-				Las credenciales ya estan cargadas, solo click en ingresar.
+				Email: juandiaz@gmail.com Password: 123456
 			</p>
 			<LoginForm />
 		</div>
