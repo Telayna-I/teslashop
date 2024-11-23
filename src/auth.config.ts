@@ -30,7 +30,6 @@ export const authConfig: NextAuthConfig = {
 			return token;
 		},
 		async session({ session, token, user }) {
-			// console.log({ session, token, user });
 			session.user = token.data as any;
 			return session;
 		},
