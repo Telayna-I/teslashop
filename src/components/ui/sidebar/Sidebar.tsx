@@ -86,7 +86,10 @@ export const Sidebar = () => {
 
 				{isAuthenticated && (
 					<button
-						onClick={() => logout()}
+						onClick={() => {
+							logout();
+							closeMenu();
+						}}
 						className='flex w-full items-center mt-5 p-2 hover:bg-gray-100 rounded transition-all '>
 						<IoLogOutOutline size={22} />
 						<span className='ml-3'>Salir</span>

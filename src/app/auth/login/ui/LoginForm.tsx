@@ -5,12 +5,13 @@ import clsx from "clsx";
 
 import Link from "next/link";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { IoInformationOutline } from "react-icons/io5";
 
 export const LoginForm = () => {
 	const [state, dispatch] = useFormState(authenticate, undefined);
+	const [password, setPassword] = useState("");
 
 	console.log({ state: state });
 
@@ -18,6 +19,7 @@ export const LoginForm = () => {
 		if (state === "Success") {
 			window.location.replace("/");
 		}
+		setPassword("123456");
 	}, [state]);
 
 	return (
@@ -35,7 +37,7 @@ export const LoginForm = () => {
 				className='px-5 py-2 border bg-gray-200 rounded mb-5'
 				name='password'
 				type='password'
-				value={"123456"}
+				value={password}
 			/>
 			<div className='flex h-8 items-end space-x-1' aria-live='polite' aria-atomic='true'>
 				{state === "CredentialsSignin" && (
