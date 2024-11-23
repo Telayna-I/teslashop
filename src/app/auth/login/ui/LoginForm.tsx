@@ -11,6 +11,8 @@ import { IoInformationOutline } from "react-icons/io5";
 
 export const LoginForm = () => {
 	const [state, dispatch] = useFormState(authenticate, undefined);
+	const [email, setEmail] = useState("juandiaz@gmail.com");
+	const [password, setPassword] = useState("123456");
 
 	console.log({ state: state });
 
@@ -27,6 +29,7 @@ export const LoginForm = () => {
 				className='px-5 py-2 border bg-gray-200 rounded mb-5'
 				name='email'
 				type='email'
+				value={email}
 			/>
 
 			<label htmlFor='password'>Contraseña</label>
@@ -34,6 +37,7 @@ export const LoginForm = () => {
 				className='px-5 py-2 border bg-gray-200 rounded mb-5'
 				name='password'
 				type='password'
+				value={password}
 			/>
 			<div className='flex h-8 items-end space-x-1' aria-live='polite' aria-atomic='true'>
 				{state === "CredentialsSignin" && (
