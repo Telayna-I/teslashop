@@ -35,7 +35,7 @@ export const LoginForm = () => {
 				className='px-5 py-2 border bg-gray-200 rounded mb-5'
 				name='password'
 				type='password'
-				defaultValue='123456'
+				// defaultValue='123456'
 			/>
 			<div className='flex h-8 items-end space-x-1' aria-live='polite' aria-atomic='true'>
 				{state === "CredentialsSignin" && (
